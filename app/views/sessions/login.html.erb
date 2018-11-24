@@ -1,0 +1,11 @@
+ 
+<% content_for :head do %>
+  <%= render "partials/main_header" %>
+<% end %>
+<div class="login-container">  
+  <div >
+    <%= image_tag 'calender.jpg', class:"calender-icon" %>
+  <div>
+
+  <%= link_to "Sign in with Google", "/auth/google_oauth2", id: "sign_in", class:"btn btn-primary" %>
+</div>

@@ -1,0 +1,46 @@
+
+<% content_for :head do %>
+  <%= render "partials/main_header" %>
+<% end %>
+<div ng-app="event" ng-controller="eventCtrl">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <table class="event-table table table-striped " >
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Location</th>
+              <th>Date</th>
+              <th>Time</th>    
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="event in events">
+              <td><span ng-bind="event.title"></span></td>
+              <td><span ng-bind="event.location"></span></td>
+              <td><span ng-bind="event.date |  date:'MM/dd/yyyy'"></span></td>
+              <td><span ng-bind="event.time |  date:'h:mm a'"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-sm-6"> <span>Create new event</span>
+        <div class='form-group'> Title:
+          <input class='form-control' type="text" class="" ng-model="new_event.title">
+        </div>
+        <div class='form-group'> Location:
+          <input class='form-control' type="text" class="" ng-model="new_event.location" id="location">
+        </div>
+        <div> Date:
+          <datetime format="date" ng-datetime-bind="new_event.date"></datetime>
+        </div>
+        
+        <div> Time:
+          <datetime format="time" ng-datetime-bind="new_event .time"></datetime>
+        </div>
+        <button ng-click="create_event()"> Create</button>
+    </div>
+    </div>
+  </div>  
+</div>

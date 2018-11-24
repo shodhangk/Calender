@@ -1,0 +1,17 @@
+// Place all the styles related to the events controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.event-table tr{
+  border: 1px solid  #666;
+  font-size: 16px;
+}
+
+.event-table thead {
+  background: #DD0D13;
+}
+
+.event-table td{
+  border-top: 1px solid  #666 !important;
+  font-size: 16px;
+}

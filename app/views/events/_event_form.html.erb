@@ -1,0 +1,12 @@
+
+<%= form_for @event,  url: {action: "create_event"} do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title, :class => 'form-control payment-new' %>
+  <%= f.label :location %>
+  <%= f.text_field :location, :class => 'form-control payment-new' %>
+   <%= f.label :date %>
+  <%= f.date_field :date, :class => 'form-control payment-new' %>
+   <%= f.label :time %>
+  <%= f.time_field :time, :class => 'form-control payment-new' %>
+  <%= f.submit "Create"%>
+<% end %>

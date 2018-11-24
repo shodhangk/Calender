@@ -1,0 +1,6 @@
+  <div class="header-container">
+    <span class="app-header">Calender<span>
+    <% if current_user.present?%>
+      <%= link_to 'Sign out', signout_path, class: "btn btn-warning float-right"  %>
+    <%end%>
+  </div>
