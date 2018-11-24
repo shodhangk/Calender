@@ -5,19 +5,25 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version: ruby 2.4.4p296
 
-* System dependencies
+* Additinal gems used: bootstrap-sass, omniauth-google-oauth2, bootstrap3-datetimepicker-rails
 
-* Configuration
+* System dependencies: 
 
-* Database creation
+* Configuration: Read 'omniauth-google-oauth2' documentation 
+                 In config\initializers\omniauth.rb file replace google_tokens["google"]["app_id"] and  google_tokens["google"]["secret_key"] with
+                 your google app id and secret key
 
-* Database initialization
+* Database creation: Sqlite 3 database
 
-* How to run the test suite
+* Database initialization: run following commads
+                          rake db:create
+                          rake db:migrate
 
-* Services (job queues, cache servers, search engines, etc.)
+* How to run the test suite: 
+
+* Services (job queues, cache servers, search engines, etc.) 
 
 * Deployment instructions
 
