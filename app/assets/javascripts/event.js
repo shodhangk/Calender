@@ -1,6 +1,6 @@
-var eventApp = angular.module("event", []); 
+var eventApp = angular.module("event", ['gm','ngMap']); 
 
-eventApp.controller("eventCtrl", function($scope,  $http) {
+eventApp.controller("eventCtrl", function($scope,  $http, NgMap) {
     $scope.events = [];
 
     $http.defaults.headers.post['X-CSRF-Token'] = $('meta[name="csrf-token"]').attr('content')
@@ -14,10 +14,20 @@ eventApp.controller("eventCtrl", function($scope,  $http) {
       }).then(function(response) {
           console.log("hello")
           $scope.events = response.data.events;
+          set_bounds()
         }, function(response) {
             console.log(response.data)
         });
     }
+
+    $scope.$on('gmPlacesAutocomplete::placeChanged', function(){
+      var place = $scope.new_event.location.getPlace();
+      $scope.new_event.latitude = place.geometry.location.lat();
+      $scope.new_event.longitude = place.geometry.location.lng();
+      $scope.new_event.location = place.formatted_address
+
+      $scope.$apply();
+  });
 
     $scope.create_event = function() {
       var req = {
@@ -32,10 +42,28 @@ eventApp.controller("eventCtrl", function($scope,  $http) {
         console.log("hello")
         $scope.events.push(response.data.event);
         $scope.new_event ={}
+        set_bounds()
       }, function(response) {
 
       });
   }
+
+
+  function set_bounds() {
+    var bounds = new google.maps.LatLngBounds();
+    for (var i=0; i < $scope.events.length; i++) {
+      if ($scope.events[i].latitude && $scope.events[i].longitude) {
+        var latlng = new google.maps.LatLng($scope.events[i].latitude, $scope.events[i].longitude);
+        bounds.extend(latlng);
+      }
+    }
+    NgMap.getMap().then(function(map) {
+      map.setCenter(bounds.getCenter());
+      map.fitBounds(bounds);
+    });
+  }
+
+
 
     $scope.get_events()
 });
@@ -57,7 +85,7 @@ eventApp.directive('datetime', function (
               scope.fileName = 'Choose a file...';
               if (element.attr("format") == 'time') {
                 element.find("#datetimepicker").datetimepicker({
-                  format: 'LT'
+                  format: 'HH:mm:ss Z'
                 });
                 element.children().find("span.glyphicon").addClass("glyphicon-time")
               } else if (element.attr("format") == 'date') {
@@ -70,7 +98,7 @@ eventApp.directive('datetime', function (
               let date_binder = element.attr("ng-datetime-bind").split(".")
               element.find('input').on('change keyup paste load input submit click blur', function (e) {
                 scope.$apply(function () {
-                    scope[date_binder[0]][date_binder[1]] = element.find("#datetimepicker").data("DateTimePicker").date()._d
+                    scope[date_binder[0]][date_binder[1]] = element.find("#datetimepicker input").val()
                 });
             });
               scope.uploadFile = function(){
